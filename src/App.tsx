@@ -1,7 +1,11 @@
-import "./App.css";
+import "./App.scss";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <h1>bichonné</h1>
+    </>
+  );
 }
 
 export default App;

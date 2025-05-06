@@ -1,0 +1,11 @@
+@mixin flex($direction: column, $justify: center) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+}
+
+@mixin text($size, $weight, $spacing: 2px) {
+  font-size: $size;
+  font-weight: $weight;
+  letter-spacing: $spacing;
+}
