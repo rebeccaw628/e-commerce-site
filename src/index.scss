@@ -1,7 +1,9 @@
 @use "././styling/partials/typography" as t;
+@use "././styling/partials/colors";
 
 * {
   box-sizing: content-box;
+  background-color: colors.$bg;
 }
 
 html {
