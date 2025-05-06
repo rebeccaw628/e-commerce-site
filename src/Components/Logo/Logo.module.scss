@@ -1,0 +1,10 @@
+@use "../../styling/modules/mixins.scss";
+@use "../../styling/partials/colors.scss";
+
+.logo {
+  text-decoration: none;
+  //   @include mixins.text(2.8rem, 500);
+  //   margin-top: 80px;
+  text-align: center;
+  color: colors.$primary;
+}

@@ -4,8 +4,7 @@
   justify-content: $justify;
 }
 
-@mixin text($size, $weight, $spacing: 2px) {
+@mixin text($size, $weight) {
   font-size: $size;
   font-weight: $weight;
-  letter-spacing: $spacing;
 }

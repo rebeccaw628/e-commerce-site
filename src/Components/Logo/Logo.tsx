@@ -1,8 +1,13 @@
+import { Link } from "react-router";
+import classes from "./Logo.module.scss";
+
 const Logo = () => {
   return (
-    <div>
-      <h1>bichonné</h1>
-    </div>
+    <>
+      <Link className={classes.logo} to="/">
+        <h1>bichonné</h1>
+      </Link>
+    </>
   );
 };
 
