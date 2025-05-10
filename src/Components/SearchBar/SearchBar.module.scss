@@ -1,0 +1,60 @@
+@use "../../styling/modules/mixins.scss";
+@use "../../styling/partials/colors";
+@use "../../styling/partials/typography" as t;
+
+.form {
+  @include mixins.flex(row, center);
+  width: 350px;
+  align-items: center;
+  margin-left: 50%;
+  margin-top: 2vh;
+  //   gap: 0.5em;
+  border-radius: 40px;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  transform: translate(-50%, -50%);
+  background: #fff;
+  transition: all 0.3s ease;
+
+  &.focus {
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.searchBar {
+  margin-left: 20px;
+  position: relative;
+  font-size: 13px;
+  background: none;
+  color: colors.$secondary;
+  width: 90%;
+  height: 40px;
+  border: none;
+  appearance: none;
+  outline: none;
+
+  &::-webkit-search-cancel-button {
+    appearance: none;
+  }
+}
+
+input::placeholder {
+  //   color: colors.$primary;
+  font-family: t.$main-font;
+}
+
+.searchBtn {
+  all: unset;
+}
+
+.icon {
+  font-size: 30px;
+  color: colors.$primary;
+  background: #fff;
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  cursor: pointer;
+  &:hover {
+    color: colors.$secondary;
+  }
+}

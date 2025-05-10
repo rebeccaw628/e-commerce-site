@@ -1,0 +1,29 @@
+@use "../../styling/modules/mixins.scss";
+@use "../../styling/partials/colors";
+
+.carousel {
+  @include mixins.flex(column, center);
+  align-items: center;
+  position: relative;
+
+  &__btn_wrapper {
+    @include mixins.flex(row, space-between);
+    width: 50vw;
+    position: absolute;
+    // border: solid 2px red;
+  }
+
+  &__img {
+    width: 50vw;
+    height: auto;
+    z-index: 2;
+    transition: ease-in-out 5s;
+  }
+
+  &__btn {
+    all: unset;
+    z-index: 3;
+    // background-color: none;
+    color: colors.$secondary;
+  }
+}

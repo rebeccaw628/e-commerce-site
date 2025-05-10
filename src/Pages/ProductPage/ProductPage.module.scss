@@ -1,0 +1,41 @@
+@use "../../styling/modules/mixins.scss";
+@use "../../styling/partials/colors";
+
+.product {
+  @include mixins.flex(column, center);
+  align-items: center;
+
+  &__img {
+    width: 80%;
+    height: auto;
+  }
+
+  &__text {
+    width: 80%;
+  }
+
+  &__bold {
+    font-weight: 600;
+  }
+}
+
+.variants {
+  @include mixins.flex(row, flex-start);
+  gap: 5px;
+  margin-top: 5px;
+
+  &__img {
+    width: 80px;
+    height: auto;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+
+    &:hover {
+      border-color: colors.$primary;
+    }
+  }
+}
+
+.selected {
+  border: 2px solid colors.$primary;
+}

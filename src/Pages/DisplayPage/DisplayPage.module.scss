@@ -1,0 +1,10 @@
+@use "../../styling/partials/colors";
+
+.displaySubheading {
+  margin-left: 10px;
+}
+
+.chairsDisplay {
+  border-bottom: 1px solid colors.$primary;
+  padding-bottom: 5px;
+}

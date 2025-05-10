@@ -29,7 +29,7 @@ $xxl: 1400px;
 }
 
 @mixin xxl-up {
-  @media screen and (min-width: $l) {
+  @media screen and (min-width: $xxl) {
     @content;
   }
 }

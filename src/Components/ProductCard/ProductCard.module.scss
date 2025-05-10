@@ -1,0 +1,46 @@
+@use "../../styling/modules/mixins.scss";
+@use "../../styling/partials/media-queries" as mq;
+
+.product {
+  @include mixins.flex(column, center);
+  align-items: center;
+
+  &:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+  }
+
+  &__img {
+    height: auto;
+    width: 350px;
+    @include mq.xxl-up {
+      width: 450px;
+    }
+    // position: relative;
+  }
+
+  &__details {
+    @include mixins.flex(column, flex-start);
+    gap: 5px;
+    width: 350px;
+    @include mq.xxl-up {
+      width: 450px;
+    }
+    // border: solid 2px red;
+    // position: absolute;
+    // align-self: flex-start;
+  }
+
+  &__title {
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  &__type {
+    margin: 0;
+  }
+
+  &__price {
+    margin: 0;
+  }
+}
