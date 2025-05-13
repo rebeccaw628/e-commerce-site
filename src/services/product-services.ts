@@ -1,11 +1,9 @@
 import { db } from "../../config/firestore";
 import {
-  addDoc,
   collection,
   doc,
   getDoc,
   getDocs,
-  setDoc,
   query,
   where,
   or,
@@ -41,18 +39,9 @@ export const getAllProducts = async () => {
   );
 };
 
-export const getChairs = async () => {
+export const getItemByCategory = async (category: string) => {
   const collectionRef = collection(db, "products");
-  const categoryQ = query(collectionRef, where("category", "==", "Chair"));
-  const querySnapshot = await getDocs(categoryQ);
-  return querySnapshot.docs.map(
-    (doc) => ({ id: doc.id, ...doc.data() } as ProductDbResponse)
-  );
-};
-
-export const getTables = async () => {
-  const collectionRef = collection(db, "products");
-  const categoryQ = query(collectionRef, where("category", "==", "Table"));
+  const categoryQ = query(collectionRef, where("category", "==", category));
   const querySnapshot = await getDocs(categoryQ);
   return querySnapshot.docs.map(
     (doc) => ({ id: doc.id, ...doc.data() } as ProductDbResponse)
@@ -63,7 +52,6 @@ export const getFeatured = async () => {
   const collectionRef = collection(db, "products");
   const featuredQ = query(collectionRef, where("isFeatured", "==", true));
   const querySnapshot = await getDocs(featuredQ);
-  // console.log(querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
   return querySnapshot.docs.map(
     (doc) => ({ id: doc.id, ...doc.data() } as ProductDbResponse)
   );
@@ -91,7 +79,7 @@ export const createCartItem = (
 ) => {
   const { title, category, price, variants } = productData;
   const imgURL = variants.find((v) => v.color === color);
-  // quantity++;
+
   return {
     title,
     category,
@@ -106,16 +94,12 @@ export const createCartItem = (
 export const checkStock = async (
   id: string,
   color: string
-  // change: number,
 ): Promise<boolean> => {
-  // const collectionRef = collection(db, "carts");
   console.log("checking stock for:", id, color);
   const productRef = doc(db, "products", id);
   const productData = (await getDoc(productRef)).data() as ProductDbResponse;
-  // const { variants } = productData;
   const variants = [...productData.variants];
   console.log(variants);
-  // const liveStock = [...variants];
   const variantIndex = variants.findIndex((v) => v.color === color);
 
   if (variants[variantIndex].stock > 0) {
@@ -148,7 +132,7 @@ export const resetData = async (cartItems: CartItem[]) => {
   }
 };
 
-// when single item is deleted from cart
+// reset item stock when single item is deleted from cart
 export const resetItemStock = async (cartItem: CartItem) => {
   const productRef = doc(db, "products", cartItem.id);
   const productData = (await getDoc(productRef)).data() as ProductDbResponse;
@@ -162,15 +146,10 @@ export const resetItemStock = async (cartItem: CartItem) => {
   await updateDoc(productRef, { variants: resetStock });
 };
 
-//TEST
 export const updateStock = async (cartItem: CartItem, change: number) => {
   const productRef = doc(db, "products", cartItem.id);
   const productData = (await getDoc(productRef)).data() as ProductDbResponse;
-  // const { variants } = productData;
-
-  // const variantIndex = variants.findIndex((v) => v.color === color);
   const variants = [...productData.variants];
-  // const variantIndex = variants.findIndex((v) => v.color === color);
   const updatedVariants = variants.map((variant) => {
     if (variant.color === cartItem.color) {
       console.log(
@@ -191,7 +170,7 @@ export const updateStock = async (cartItem: CartItem, change: number) => {
 
 //
 
-// to implement in future
+// to implement search feature in future
 export const searchProducts = async (searchTerm: string) => {
   const collectionRef = collection(db, "products");
   const searchQ = query(
@@ -206,30 +185,3 @@ export const searchProducts = async (searchTerm: string) => {
   const querySnapshot = await getDocs(searchQ);
   console.log(querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
 };
-
-//UNMODIFED ORIGINAL
-// export const updateStock = async (cartItem: CartItem) => {
-//   const productRef = doc(db, "products", cartItem.id);
-//   const productData = (await getDoc(productRef)).data() as ProductDbResponse;
-//   // const { variants } = productData;
-
-//   // const variantIndex = variants.findIndex((v) => v.color === color);
-//   const variants = [...productData.variants];
-//   // const variantIndex = variants.findIndex((v) => v.color === color);
-//   const updatedVariants = variants.map((variant) => {
-//     if (variant.color === cartItem.color) {
-//       console.log(
-//         `item: ${cartItem}, stock before item removed from cart: ${variant.stock}`
-//       );
-//       const newStock = variant.stock + 1;
-//       console.log(
-//         `item: ${cartItem}, stock after item removed from cart: ${newStock}`
-//       );
-//       return { ...variant, stock: newStock };
-//     }
-//     return variant;
-//   });
-//   await updateDoc(productRef, { variants: updatedVariants });
-
-//   console.log("variant stock updated");
-// };

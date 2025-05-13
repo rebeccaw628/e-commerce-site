@@ -1,3 +1,5 @@
+//NOT IN USE
+
 import { createContext, useState } from "react";
 import {
   type ProductDbResponse,
@@ -9,19 +11,6 @@ interface ProductContextValues {
   setProductsData: (products: ProductDbResponse[]) => unknown;
   handleFavourite: (id: string, favourited: boolean) => unknown;
 }
-
-// const DefaultProductDbResponseValues: ProductDbResponse = {
-//   id: "",
-//   title: "",
-//   category: "",
-//   subCategory: "",
-//   price: 0,
-//   material: "",
-//   dimensions: "",
-//   isFeatured: false,
-//   favourited: false,
-//   variants: [],
-// };
 
 const DefaultProductContextValues: ProductContextValues = {
   productsData: [],

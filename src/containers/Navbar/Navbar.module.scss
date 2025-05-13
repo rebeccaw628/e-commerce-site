@@ -5,8 +5,6 @@
   @include mixins.flex(column, center);
   align-items: center;
   gap: 1.5em;
-  //   margin-top: 20px;
-  // border: solid 2px red;
 
   &__links {
     @include mixins.flex(row, center);

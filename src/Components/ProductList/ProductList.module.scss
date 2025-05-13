@@ -2,10 +2,6 @@
 
 .productGrid {
   display: grid;
-  //   justify-content: center;
-  //   align-items: center;
-  //   border: solid blue 2px;
-  // width: 100%;
   padding: 40px;
   grid-column-gap: 15px;
   grid-row-gap: 5vh;
@@ -13,9 +9,4 @@
   @include mq.xxl-up {
     grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
   }
-
-  //   @include mq.md-up {
-  //     grid-template-columns: repeat(auto-fit, 1fr);
-  //     gap: 35px;
-  //   }
 }

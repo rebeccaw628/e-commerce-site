@@ -1,9 +1,6 @@
-import {
-  type ProductDbResponse,
-  updateFavourite,
-} from "../../services/product-services";
+import { type ProductDbResponse } from "../../services/product-services";
 import classes from "./ProductCard.module.scss";
-import { useNavigate, Link } from "react-router";
+import { Link } from "react-router";
 
 interface ProductCardProps {
   product: ProductDbResponse;

@@ -8,7 +8,6 @@
   align-items: center;
   margin-left: 50%;
   margin-top: 2vh;
-  //   gap: 0.5em;
   border-radius: 40px;
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
   transform: translate(-50%, -50%);
@@ -38,7 +37,6 @@
 }
 
 input::placeholder {
-  //   color: colors.$primary;
   font-family: t.$main-font;
 }
 

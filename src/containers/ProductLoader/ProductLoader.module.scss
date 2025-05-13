@@ -4,7 +4,6 @@
 .product {
   @include mixins.flex(column, center);
   align-items: center;
-  border: solid 2px red;
 
   &__img {
     width: 80%;
@@ -30,12 +29,7 @@
     height: 30px;
     &:hover {
       opacity: 0.75;
-      cursor: pointer;
-      // border-color: colors.$bg;
-      // color: colors.$bg;
-      // background-color: colors.$primary;
     }
-    // margin-left: 50vw;
   }
 }
 

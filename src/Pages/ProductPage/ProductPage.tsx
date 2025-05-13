@@ -1,11 +1,7 @@
-// import { useParams } from "react-router";
 import { useState, useContext } from "react";
-
 import type { ProductDbResponse } from "../../services/product-services";
 import classes from "./ProductPage.module.scss";
 import { CartContext } from "../../context/CartProvider";
-import { FaRegHeart, FaHeart } from "react-icons/fa";
-import { updateFavourite } from "../../services/product-services";
 
 interface ProductPageProps {
   productData: ProductDbResponse;

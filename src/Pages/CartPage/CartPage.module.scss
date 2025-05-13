@@ -3,6 +3,8 @@
 @use "../../styling/partials/media-queries" as mq;
 
 .cart_container {
+  @include mixins.flex(column, center);
+  gap: 10px;
   padding: 30px;
 }
 
@@ -11,13 +13,11 @@
 
   &__subheadings {
     @include mixins.flex(row, space-between);
-    border: solid 2px green;
   }
 
   &__product {
     @include mq.md-up {
       width: 60%;
-      border: solid 2px purple;
     }
   }
 
@@ -28,7 +28,6 @@
       @include mixins.flex(row, space-between);
       gap: 25px;
       width: 40%;
-      border: solid 2px rgb(226, 86, 109);
     }
   }
 }
@@ -36,7 +35,6 @@
 .item {
   @include mixins.flex(row, space-between);
   align-items: center;
-  border: solid 2px red;
   &__img {
     width: 100px;
     @include mq.md-up {
@@ -44,11 +42,7 @@
     }
   }
   &__info {
-    // @include mixins.flex(row, space-between);
     @include mixins.flex(column, center);
-    // @include mq.md-up {
-    //   @include mixins.flex(column, center);
-    // }
   }
 }
 
@@ -58,14 +52,12 @@
   @include mq.md-up {
     gap: 30px;
     width: 60%;
-    border: solid 2px purple;
   }
 }
 
 .amounts {
   @include mixins.flex(column, space-between);
   align-items: flex-end;
-  // border: solid 2px black;
   @include mq.md-up {
     @include mixins.flex(row, space-between);
     align-items: center;
@@ -76,7 +68,6 @@
     @include mixins.flex(row, space-between);
     align-items: center;
     gap: 8px;
-    border: solid 2px green;
   }
 
   &__btns {
@@ -130,7 +121,7 @@
 
 .list {
   @include mixins.flex(column, center);
-  border: solid 2px blue;
+  gap: 10px;
 }
 
 p {

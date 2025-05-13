@@ -10,7 +10,6 @@ const SearchBar = () => {
         className={classes.searchBar}
         name="searchTerm"
         placeholder="Search"
-        // ref={inputRef}
       />
       <button type="submit" className={classes.searchBtn}>
         <IoSearch className={classes.icon} />

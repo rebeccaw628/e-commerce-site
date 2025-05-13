@@ -15,9 +15,7 @@ const HomePage = () => {
   console.log(featuredImgs);
   return (
     <div className={classes.home}>
-      {/* <div> */}
       <Carousel imgs={featuredImgs} />
-      {/* </div> */}
       <h4 className={classes.home__text}>Timeless elegance</h4>
       <div className={classes.home__link}>
         <Link to={"/allproducts"}>SEE MORE</Link>

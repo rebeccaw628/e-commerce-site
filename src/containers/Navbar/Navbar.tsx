@@ -1,13 +1,10 @@
 import { NavLink, useNavigate } from "react-router";
-import { useRef } from "react";
 import classes from "./Navbar.module.scss";
-import SearchBar from "../../Components/SearchBar/SearchBar";
+// import SearchBar from "../../Components/SearchBar/SearchBar";
 import { FaShoppingCart } from "react-icons/fa";
 
 const Navbar = () => {
-  const handleSubmit = () => {
-    // navigate(`/search/${inputRef.current.value}`);
-  };
+  // const handleSubmit = () => {};
   return (
     <nav className={classes.nav}>
       <div className={classes.nav__links}>
@@ -24,9 +21,9 @@ const Navbar = () => {
           <FaShoppingCart className={classes.nav__cart} />
         </NavLink>
       </div>
-      <div className={classes.nav__search}>
+      {/* <div className={classes.nav__search}>
         <SearchBar onSubmit={handleSubmit} />
-      </div>
+      </div> */}
     </nav>
   );
 };
