@@ -1,0 +1,153 @@
+@use "../../styling/modules/mixins.scss";
+@use "../../styling/partials/colors";
+@use "../../styling/partials/media-queries" as mq;
+
+.cart_container {
+  padding: 30px;
+}
+
+.cart {
+  @include mixins.flex(column, center);
+
+  &__subheadings {
+    @include mixins.flex(row, space-between);
+    border: solid 2px green;
+  }
+
+  &__product {
+    @include mq.md-up {
+      width: 60%;
+      border: solid 2px purple;
+    }
+  }
+
+  &__calcs {
+    display: none;
+
+    @include mq.md-up {
+      @include mixins.flex(row, space-between);
+      gap: 25px;
+      width: 40%;
+      border: solid 2px rgb(226, 86, 109);
+    }
+  }
+}
+
+.item {
+  @include mixins.flex(row, space-between);
+  align-items: center;
+  border: solid 2px red;
+  &__img {
+    width: 100px;
+    @include mq.md-up {
+      width: 120px;
+    }
+  }
+  &__info {
+    // @include mixins.flex(row, space-between);
+    @include mixins.flex(column, center);
+    // @include mq.md-up {
+    //   @include mixins.flex(column, center);
+    // }
+  }
+}
+
+.item_details {
+  @include mixins.flex(row, flex-start);
+  gap: 10px;
+  @include mq.md-up {
+    gap: 30px;
+    width: 60%;
+    border: solid 2px purple;
+  }
+}
+
+.amounts {
+  @include mixins.flex(column, space-between);
+  align-items: flex-end;
+  // border: solid 2px black;
+  @include mq.md-up {
+    @include mixins.flex(row, space-between);
+    align-items: center;
+    width: 40%;
+  }
+
+  &__qty {
+    @include mixins.flex(row, space-between);
+    align-items: center;
+    gap: 8px;
+    border: solid 2px green;
+  }
+
+  &__btns {
+    text-align: center;
+    vertical-align: center;
+    font-size: 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+
+  &__delete {
+    background-color: transparent;
+    font-size: 1rem;
+  }
+}
+
+.total {
+  @include mixins.flex(row, space-between);
+
+  &_wrapper {
+    text-align: end;
+  }
+}
+
+.btns_wrapper {
+  @include mixins.flex(column, space-between);
+  gap: 5px;
+}
+.checkout {
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 10px;
+  padding: 10px;
+  &:hover {
+    background-color: rgb(185, 181, 181);
+  }
+}
+
+.clear {
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 10px;
+  padding: 10px;
+  &:hover {
+    background-color: rgb(230, 109, 109);
+  }
+}
+
+.list {
+  @include mixins.flex(column, center);
+  border: solid 2px blue;
+}
+
+p {
+  margin-bottom: 0;
+  font-size: 1.3rem;
+}
+
+.empty {
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+h3 {
+  font-size: 1.2rem;
+}
+h4 {
+  font-size: 1rem;
+}

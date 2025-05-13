@@ -4,14 +4,18 @@ import {
 } from "../../services/product-services";
 import classes from "./ProductCard.module.scss";
 import { useNavigate, Link } from "react-router";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { useContext } from "react";
+// import { CartContext } from "../../context/CartProvider";
+import { ProductContext } from "../../context/ProductProvider";
 
 interface ProductCardProps {
   product: ProductDbResponse;
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  // const { product, setProduct } = useContext(ProductContext);
-  const { variants, id, title, subCategory, price } = product;
+  const { handleFavourite } = useContext(ProductContext);
+  const { variants, id, title, subCategory, price, favourited } = product;
 
   // const handleFavourite = async (
   //   product: ProductDbResponse,
@@ -36,12 +40,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
         {/* {favourited ? (
           <FaHeart
             className={classes.product__favourite}
-            onClick={() => handleFavourite(product, id, favourited)}
+            onClick={() => handleFavourite(id, favourited)}
           />
         ) : (
           <FaRegHeart
             className={classes.product__favourite}
-            onClick={() => handleFavourite(product, id, favourited)}
+            onClick={() => handleFavourite(id, favourited)}
           />
         )} */}
       </div>

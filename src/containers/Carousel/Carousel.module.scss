@@ -1,5 +1,6 @@
 @use "../../styling/modules/mixins.scss";
 @use "../../styling/partials/colors";
+@use "../../styling/partials/media-queries" as mq;
 
 .carousel {
   @include mixins.flex(column, center);
@@ -8,16 +9,21 @@
 
   &__btn_wrapper {
     @include mixins.flex(row, space-between);
-    width: 50vw;
+    width: 80%;
     position: absolute;
-    // border: solid 2px red;
+    @include mq.md-up {
+      width: 50%;
+    }
   }
 
   &__img {
-    width: 50vw;
+    width: 80%;
     height: auto;
     z-index: 2;
     transition: ease-in-out 5s;
+    @include mq.md-up {
+      width: 50%;
+    }
   }
 
   &__btn {

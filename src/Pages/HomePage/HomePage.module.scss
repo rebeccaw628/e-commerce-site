@@ -1,0 +1,23 @@
+@use "../../styling/modules/mixins.scss";
+@use "../../styling/partials/media-queries" as mq;
+
+.home {
+  @include mixins.flex(column, center);
+  border: solid 2px green;
+  gap: 10px;
+
+  @include mq.md-up {
+    @include mixins.flex(row, center);
+  }
+
+  &__link {
+    align-self: center;
+    text-align: center;
+    // color: red;
+    font-size: 1.3rem;
+    border-radius: 10px;
+    border: 2px solid black;
+    width: 100px;
+    padding: 15px;
+  }
+}

@@ -10,3 +10,8 @@ html {
   font-family: t.$main-font;
   color: colors.$primary;
 }
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

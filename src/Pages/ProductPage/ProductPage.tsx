@@ -1,56 +1,21 @@
-import { useParams } from "react-router";
-import { useEffect, useState } from "react";
-import type { ErrorObject } from "../DisplayPage/DisplayPage";
-import { getProductById } from "../../services/product-services";
+// import { useParams } from "react-router";
+import { useState, useContext } from "react";
+
 import type { ProductDbResponse } from "../../services/product-services";
 import classes from "./ProductPage.module.scss";
-import { ImSpinner2 } from "react-icons/im";
+import { CartContext } from "../../context/CartProvider";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { updateFavourite } from "../../services/product-services";
 
-const DefaultProductDbResponseValues: ProductDbResponse = {
-  id: "",
-  title: "",
-  category: "",
-  subCategory: "",
-  price: "",
-  material: "",
-  dimensions: "",
-  isFeatured: false,
-  variants: [],
-};
+interface ProductPageProps {
+  productData: ProductDbResponse;
+}
 
-const ProductPage = () => {
-  const { id } = useParams();
+const ProductPage = ({ productData }: ProductPageProps) => {
   const [chosenVariant, setChosenVariant] = useState(0);
-  const [productData, setProductData] = useState<ProductDbResponse>(
-    DefaultProductDbResponseValues
-  );
-  const [error, setError] = useState<ErrorObject | null>(null);
-  const [fetchStatus, setFetchStatus] = useState<
-    "LOADING" | "SUCCESS" | "FAILURE" | "PENDING"
-  >("PENDING");
-
-  //   console.log(getProductById("29I8zdja46gqujD8T2vV"));
-
-  useEffect(() => {
-    const fetchProduct = async () => {
-      setFetchStatus("LOADING");
-      if (!id) {
-        setFetchStatus("FAILURE");
-        setError(new Error("Product unavailable"));
-        return;
-      }
-      try {
-        const result = await getProductById(id);
-        setFetchStatus("SUCCESS");
-        setProductData(result);
-      } catch (err) {
-        const error = err instanceof Error ? err : new Error(String(err));
-        setFetchStatus("FAILURE");
-        setError(error);
-      }
-    };
-    fetchProduct();
-  }, [id]);
+  const { cartItems, addToCart } = useContext(CartContext);
+  const { title, subCategory, price, variants, material, dimensions } =
+    productData;
 
   const displayChosen = () => {
     setChosenVariant((prev) =>
@@ -58,124 +23,70 @@ const ProductPage = () => {
     );
   };
 
+  const handleAdd = async (productData: ProductDbResponse) => {
+    console.log("add button clicked from productPage");
+    const color = productData.variants[chosenVariant].color;
+    const added = await addToCart(productData, color);
+    if (added) {
+      console.log(
+        "item in stock, item added to cart. all items in cart:",
+        cartItems
+      );
+    } else {
+      console.log("item out of stock, item not added");
+    }
+  };
+  console.log(cartItems);
+
   return (
-    // {fetchStatus === "SUCCESS" && (
-    <>
-      <div className={classes.product}>
-        {fetchStatus === "LOADING" && <ImSpinner2 />}
-        {fetchStatus === "FAILURE" && (
-          <>
-            <p>Failed to load products</p>
-            <p>{error?.message}</p>
-          </>
-        )}
-        {fetchStatus === "SUCCESS" && (
-          <>
-            <img
-              src={productData.variants[chosenVariant].imgURL}
-              alt={productData.category}
-              className={classes.product__img}
-            ></img>
+    <div className={classes.product}>
+      <img
+        src={variants[chosenVariant].imgURL}
+        alt={productData.category}
+        className={classes.product__img}
+      ></img>
 
-            <div className={classes.product__text}>
-              <h4>{productData.title}</h4>
-              <h3>{productData.subCategory}</h3>
-              <h3>${productData.price}</h3>
-              <p>
-                <span className={classes.product__bold}>Colour: </span>
-                {productData.variants[chosenVariant].color}
-              </p>
-              {productData.variants.length > 1 && (
-                <div className={classes.variants}>
-                  {productData.variants.map((variant, index) => (
-                    <img
-                      key={variant.color}
-                      src={variant.imgURL}
-                      alt={productData.category}
-                      className={`${classes.variants__img} ${
-                        chosenVariant === index ? classes.selected : ""
-                      }`}
-                      onClick={displayChosen}
-                    ></img>
-                  ))}
-                </div>
-              )}
+      <div className={classes.product__text}>
+        <h3>{title}</h3>
+        <h2>{subCategory}</h2>
+        <p>${price}</p>
 
-              <p>
-                <span className={classes.product__bold}>Material: </span>
-                {productData.material}
-              </p>
-              <p>
-                <span className={classes.product__bold}>LxWxH [cm]: </span>
-                {productData.dimensions}
-              </p>
-            </div>
-          </>
+        <p>
+          <span className={classes.product__bold}>Colour: </span>
+          {variants[chosenVariant].color}
+        </p>
+        {variants.length > 1 && (
+          <div className={classes.variants}>
+            {variants.map((variant, index) => (
+              <img
+                key={variant.color}
+                src={variant.imgURL}
+                alt={productData.category}
+                className={`${classes.variants__img} ${
+                  chosenVariant === index ? classes.selected : ""
+                }`}
+                onClick={displayChosen}
+              ></img>
+            ))}
+          </div>
         )}
+        <button
+          className={classes.product__add}
+          onClick={() => handleAdd(productData)}
+        >
+          Add to Cart
+        </button>
+        <p>
+          <span className={classes.product__bold}>Material: </span>
+          {material}
+        </p>
+        <p>
+          <span className={classes.product__bold}>LxWxH [cm]: </span>
+          {dimensions}
+        </p>
       </div>
-    </>
-    // )}
+    </div>
   );
 };
 
 export default ProductPage;
-
-//     setFetchStatus("LOADING");
-//     if (!id) throw new Error("Product unavailable");
-//     getProductById(id)
-//       .then((result) => {
-//         setFetchStatus("SUCCESS");
-//         setProductData(result);
-//       })
-//       .catch((err) => {
-//         setFetchStatus("FAILURE");
-//         setError(err instanceof Error ? err : new Error(err));
-//       });
-//   }, []);
-
-// return (
-//     <>
-//       {productData && (
-//         <div className={classes.product}>
-//           <img
-//             src={productData.variants[chosenVariant].imgURL}
-//             alt={productData.category}
-//             className={classes.product__img}
-//             // onClick={displayChosen}
-//           ></img>
-
-//           <div className={classes.product__text}>
-//             <h4>{productData.title}</h4>
-//             <h3>{productData.subCategory}</h3>
-//             <h3>${productData.price}</h3>
-//             {/* <p>
-//               <span className={classes.product__bold}>Colour: </span>
-//               {productData.variants}
-//             </p> */}
-
-//             {productData.variants.length > 1 && (
-//               <div className={classes.variants}>
-//                 {productData.variants.map((variant) => (
-//                   <img
-//                     key={productData.id}
-//                     src={variant.imgURL}
-//                     alt={productData.category}
-//                     className={classes.variants__img}
-//                   ></img>
-//                 ))}
-//               </div>
-//             )}
-
-//             <p>
-//               <span className={classes.product__bold}>Material: </span>
-//               {productData.material}
-//             </p>
-//             <p>
-//               <span className={classes.product__bold}>LxWxH [cm]: </span>
-//               {productData.dimensions}
-//             </p>
-//           </div>
-//         </div>
-//       )}
-//     </>
-//   );

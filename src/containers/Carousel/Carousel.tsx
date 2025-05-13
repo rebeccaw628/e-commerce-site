@@ -1,7 +1,5 @@
 import { useState } from "react";
 import classes from "./Carousel.module.scss";
-import { IoIosArrowForward } from "react-icons/io";
-import { IoIosArrowBack } from "react-icons/io";
 
 interface CarouselProps {
   imgs: string[];

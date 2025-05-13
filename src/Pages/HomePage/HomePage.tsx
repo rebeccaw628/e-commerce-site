@@ -2,10 +2,10 @@ import { getFeatured } from "../../services/product-services";
 import Carousel from "../../containers/Carousel/Carousel";
 import { useState, useEffect } from "react";
 import type { ProductDbResponse } from "../../services/product-services";
-import ProductList from "../../Components/ProductList/ProductList";
+import { Link } from "react-router";
+import classes from "./HomePage.module.scss";
 
 const HomePage = () => {
-  console.log(getFeatured());
   const [featured, setIsFeatured] = useState<ProductDbResponse[]>([]);
   useEffect(() => {
     getFeatured().then((data) => setIsFeatured(data));
@@ -14,10 +14,14 @@ const HomePage = () => {
 
   console.log(featuredImgs);
   return (
-    <div>
-      homepage
+    <div className={classes.home}>
+      {/* <div> */}
       <Carousel imgs={featuredImgs} />
-      {/* <ProductList /> */}
+      {/* </div> */}
+      <h4 className={classes.home__text}>Timeless elegance</h4>
+      <div className={classes.home__link}>
+        <Link to={"/allproducts"}>SEE MORE</Link>
+      </div>
     </div>
   );
 };

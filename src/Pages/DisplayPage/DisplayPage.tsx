@@ -1,4 +1,3 @@
-// import { paginate } from "../../services/product-services";
 import ProductList from "../../Components/ProductList/ProductList";
 import { type ProductDbResponse } from "../../services/product-services";
 import { useState, useEffect } from "react";
@@ -16,19 +15,18 @@ export interface ErrorObject {
 }
 
 const DisplayPage = ({ fetchFn, pageTitle }: DisplayPageProps) => {
-  const [productData, setProductData] = useState<ProductDbResponse[]>([]);
+  const [productsData, setProductsData] = useState<ProductDbResponse[]>([]);
   const [error, setError] = useState<ErrorObject | null>(null);
   const [fetchStatus, setFetchStatus] = useState<
     "LOADING" | "SUCCESS" | "FAILURE" | "PENDING"
   >("PENDING");
-  // console.log(fetchFn);
 
   useEffect(() => {
     setFetchStatus("LOADING");
     fetchFn()
       .then((result) => {
         setFetchStatus("SUCCESS");
-        setProductData(result);
+        setProductsData(result);
       })
       .catch((err) => {
         setFetchStatus("FAILURE");
@@ -50,10 +48,10 @@ const DisplayPage = ({ fetchFn, pageTitle }: DisplayPageProps) => {
           <div className={classes.displaySubheading}>
             <h2>{pageTitle}</h2>
             <h4 className={classes.chairsDisplay}>
-              Showing {productData.length} results
+              Showing {productsData.length} results
             </h4>
           </div>
-          <ProductList products={productData} />
+          <ProductList products={productsData} />
         </>
       )}
     </div>
