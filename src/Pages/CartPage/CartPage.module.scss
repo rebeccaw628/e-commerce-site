@@ -30,6 +30,13 @@
       width: 40%;
     }
   }
+
+  &__subtotal {
+    display: none;
+    @include mq.md-up {
+      display: block;
+    }
+  }
 }
 
 .item {

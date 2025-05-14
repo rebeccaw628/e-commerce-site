@@ -1,35 +1,46 @@
 import { useState } from "react";
 import classes from "./Carousel.module.scss";
+import { type ProductDbResponse } from "../../services/product-services";
 
 interface CarouselProps {
-  imgs: string[];
+  featured: ProductDbResponse[];
 }
 
-const Carousel = ({ imgs }: CarouselProps) => {
+const Carousel = ({ featured }: CarouselProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const nextSlide = () => {
     setActiveIndex((prevIndex) =>
-      prevIndex === imgs.length - 1 ? 0 : prevIndex + 1
+      prevIndex === featured.length - 1 ? 0 : prevIndex + 1
     );
   };
   const prevSlide = () => {
     setActiveIndex((prevIndex) =>
-      prevIndex === 0 ? imgs.length - 1 : prevIndex - 1
+      prevIndex === 0 ? featured.length - 1 : prevIndex - 1
     );
   };
 
   return (
     <div className={classes.carousel}>
-      <img
-        src={imgs[activeIndex]}
-        alt={"Featured Product"}
-        className={classes.carousel__img}
-      />
+      <div className={classes.carousel__display}>
+        <div
+          className={classes.carousel__imgs}
+          style={{ transform: `translateX(-${activeIndex * 100}%)` }} //moves image to the left/right by exactly one image width at a time
+        >
+          {featured.map((product) => (
+            <img
+              key={product.id}
+              src={product.variants[0].imgURL}
+              alt={"Featured Product"}
+              className={classes.carousel__img}
+            />
+          ))}
+        </div>
+      </div>
       <div className={classes.carousel__btn_wrapper}>
-        <button onClick={nextSlide} className={classes.carousel__btn}>
+        <button onClick={prevSlide} className={classes.carousel__btn}>
           &#10094;
         </button>
-        <button onClick={prevSlide} className={classes.carousel__btn}>
+        <button onClick={nextSlide} className={classes.carousel__btn}>
           &#10095;
         </button>
       </div>

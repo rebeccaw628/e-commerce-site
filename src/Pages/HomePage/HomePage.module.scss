@@ -3,21 +3,25 @@
 
 .home {
   @include mixins.flex(column, center);
-  border: solid 2px green;
+  align-items: center;
   gap: 10px;
+  letter-spacing: 2px;
+  font-weight: 600;
 
-  @include mq.md-up {
-    @include mixins.flex(row, center);
+  &__text {
+    text-align: center;
   }
 
   &__link {
     align-self: center;
     text-align: center;
-    // color: red;
     font-size: 1.3rem;
-    border-radius: 10px;
     border: 2px solid black;
-    width: 100px;
     padding: 15px;
+    &:hover {
+      background-color: rgb(221, 214, 206);
+      transition: 0.3s;
+      cursor: pointer;
+    }
   }
 }

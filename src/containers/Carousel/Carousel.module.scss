@@ -3,32 +3,50 @@
 @use "../../styling/partials/media-queries" as mq;
 
 .carousel {
-  @include mixins.flex(column, center);
-  align-items: center;
+  align-self: center;
   position: relative;
+  width: 80%;
+  @include mq.md-up {
+    width: 40%;
+  }
 
-  &__btn_wrapper {
-    @include mixins.flex(row, space-between);
-    width: 80%;
-    position: absolute;
-    @include mq.md-up {
-      width: 50%;
-    }
+  &__display {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    align-self: center;
+  }
+
+  &__imgs {
+    display: flex;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
   }
 
   &__img {
-    width: 80%;
-    height: auto;
-    z-index: 2;
-    transition: ease-in-out 5s;
-    @include mq.md-up {
-      width: 50%;
-    }
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__btn_wrapper {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    transform: translateY(-50%);
+    background-color: transparent;
   }
 
   &__btn {
     all: unset;
     z-index: 3;
     color: colors.$secondary;
+    cursor: pointer;
   }
 }

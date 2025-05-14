@@ -4,21 +4,25 @@ import { useState, useEffect } from "react";
 import type { ProductDbResponse } from "../../services/product-services";
 import { Link } from "react-router";
 import classes from "./HomePage.module.scss";
+// import ProductCard from "../../Components/ProductCard/ProductCard";
+import ProductList from "../../Components/ProductList/ProductList";
 
 const HomePage = () => {
-  const [featured, setIsFeatured] = useState<ProductDbResponse[]>([]);
+  const [featured, setFeatured] = useState<ProductDbResponse[]>([]);
   useEffect(() => {
-    getFeatured().then((data) => setIsFeatured(data));
+    getFeatured().then((data) => setFeatured(data));
   }, []);
-  const featuredImgs = featured?.map((product) => product.variants[0].imgURL);
+  // const featuredImgs = featured?.map((product) => product.variants[0].imgURL);
 
-  console.log(featuredImgs);
+  // console.log(featuredImgs);
   return (
     <div className={classes.home}>
-      <Carousel imgs={featuredImgs} />
-      <h4 className={classes.home__text}>Timeless elegance</h4>
+      <Carousel featured={featured} />
+      <h4 className={classes.home__text}>
+        bichonné: fussed over, because beauty deserves the fuss.
+      </h4>
       <div className={classes.home__link}>
-        <Link to={"/allproducts"}>SEE MORE</Link>
+        <Link to={"/allproducts"}>SHOP NOW</Link>
       </div>
     </div>
   );
