@@ -3,6 +3,8 @@ import { checkStock, type Variant } from "../services/product-services";
 import {
   type ProductDbResponse,
   updateStock,
+  resetItemStock,
+  updateStockByAmount,
 } from "../services/product-services";
 
 interface CartContextValues {
@@ -10,7 +12,7 @@ interface CartContextValues {
   setCartItems: (cartsItems: CartItem[]) => unknown;
   addToCart: (productData: ProductDbResponse, color: string) => unknown;
   deleteFromCart: (cartItem: CartItem, change: number) => unknown;
-  reduceQuantity: (cartItem: CartItem, change: number) => unknown;
+  // reduceQuantity: (cartItem: CartItem, change: number) => unknown;
   increaseQuantity: (cartItem: CartItem) => unknown;
 }
 
@@ -19,7 +21,7 @@ const DefaultCartContextValues: CartContextValues = {
   setCartItems: () => {},
   addToCart: () => {},
   deleteFromCart: () => {},
-  reduceQuantity: () => {},
+  // reduceQuantity: () => {},
   increaseQuantity: () => {},
 };
 
@@ -101,8 +103,8 @@ const CartContextProvider = ({ children }: CartContextProviderProps) => {
   };
 
   const deleteFromCart = async (cartItem: CartItem, change: number) => {
-    console.log("item to delete", cartItem);
-    await updateStock(cartItem, change); //updates firestock stock
+    console.log("item to delete", cartItem, "change", change);
+    await updateStockByAmount(cartItem, change); //updates firestock stock
     setCartItems((prevCart) => {
       const newCart = prevCart
         .map((item) =>
@@ -118,22 +120,22 @@ const CartContextProvider = ({ children }: CartContextProviderProps) => {
   };
 
   // reduce quantity of item from cart
-  const reduceQuantity = async (cartItem: CartItem, change: number) => {
-    console.log("reduceQuantity for:", cartItem);
-    if (cartItem.quantity === 1) {
-      //delete item from cart if only one item was in cart
-      deleteFromCart(cartItem, change);
-    } else {
-      await updateStock(cartItem, change);
-      setCartItems((prevCart) =>
-        prevCart.map((item) =>
-          item.id === cartItem.id && item.color === cartItem.color
-            ? { ...item, quantity: item.quantity + change }
-            : item
-        )
-      );
-    }
-  };
+  // const reduceQuantity = async (cartItem: CartItem, change: number) => {
+  //   console.log("reduceQuantity for:", cartItem);
+  //   if (cartItem.quantity === 1) {
+  //     //delete item from cart if only one item was in cart
+  //     deleteFromCart(cartItem, change);
+  //   } else {
+  //     await updateStockByAmount(cartItem, change);
+  //     setCartItems((prevCart) =>
+  //       prevCart.map((item) =>
+  //         item.id === cartItem.id && item.color === cartItem.color
+  //           ? { ...item, quantity: item.quantity + change }
+  //           : item
+  //       )
+  //     );
+  //   }
+  // };
 
   // increase quantity of item in cart
   const increaseQuantity = (cartItem: CartItem) => {
@@ -158,7 +160,7 @@ const CartContextProvider = ({ children }: CartContextProviderProps) => {
         setCartItems,
         addToCart,
         deleteFromCart,
-        reduceQuantity,
+        // reduceQuantity,
         increaseQuantity,
       }}
     >

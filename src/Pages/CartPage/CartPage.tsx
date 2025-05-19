@@ -35,7 +35,7 @@ const CartPage = () => {
   };
 
   const handleDecrease = async (item: CartItem, change: number) => {
-    console.log("decrease btn clicked for:", item);
+    console.log("decrease btn clicked for:", item, "change", change);
     console.log(
       `item: ${item.id}, ${item.color} qty in cart before removal: ${item.quantity}`
     );

@@ -132,43 +132,72 @@ export const resetData = async (cartItems: CartItem[]) => {
   }
 };
 
-// reset item stock when single item is deleted from cart
-export const resetItemStock = async (cartItem: CartItem) => {
+export const updateStock = async (
+  cartItem: CartItem,
+  stockCalculator: (variant: Variant) => number
+) => {
   const productRef = doc(db, "products", cartItem.id);
   const productData = (await getDoc(productRef)).data() as ProductDbResponse;
   const { variants } = productData;
-  const resetStock = variants.map((variant) => {
-    if (variant.color === cartItem.color) {
-      return { ...variant, stock: variant.initialStock };
-    }
-    return variant;
-  });
-  await updateDoc(productRef, { variants: resetStock });
-};
-
-export const updateStock = async (cartItem: CartItem, change: number) => {
-  const productRef = doc(db, "products", cartItem.id);
-  const productData = (await getDoc(productRef)).data() as ProductDbResponse;
-  const variants = [...productData.variants];
   const updatedVariants = variants.map((variant) => {
     if (variant.color === cartItem.color) {
-      console.log(
-        `item: ${cartItem}, stock before item removed from cart: ${variant.stock}`
-      );
-      const newStock = variant.stock - change;
-      console.log(
-        `item: ${cartItem}, stock after item removed from cart: ${newStock}`
-      );
+      const newStock = stockCalculator(variant);
       return { ...variant, stock: newStock };
     }
     return variant;
   });
   await updateDoc(productRef, { variants: updatedVariants });
-
   console.log("variant stock updated");
 };
 
-//
+export const resetItemStock = async (cartItem: CartItem) => {
+  await updateStock(cartItem, (variant) => variant.initialStock);
+};
+
+export const updateStockByAmount = async (
+  cartItem: CartItem,
+  change: number
+) => {
+  await updateStock(cartItem, (variant) => variant.stock - change);
+};
+
+//BEFORE REFACTOR
+// reset item stock when single item is deleted from cart
+// export const resetItemStock = async (cartItem: CartItem) => {
+//   const productRef = doc(db, "products", cartItem.id);
+//   const productData = (await getDoc(productRef)).data() as ProductDbResponse;
+//   const { variants } = productData;
+//   const resetStock = variants.map((variant) => {
+//     if (variant.color === cartItem.color) {
+//       return { ...variant, stock: variant.initialStock };
+//     }
+//     return variant;
+//   });
+//   await updateDoc(productRef, { variants: resetStock });
+// };
+
+// export const updateStock = async (cartItem: CartItem, change: number) => {
+//   const productRef = doc(db, "products", cartItem.id);
+//   const productData = (await getDoc(productRef)).data() as ProductDbResponse;
+//   const variants = [...productData.variants];
+//   const updatedVariants = variants.map((variant) => {
+//     if (variant.color === cartItem.color) {
+//       console.log(
+//         `item: ${cartItem}, stock before item removed from cart: ${variant.stock}`
+//       );
+//       const newStock = variant.stock - change;
+//       console.log(
+//         `item: ${cartItem}, stock after item removed from cart: ${newStock}`
+//       );
+//       return { ...variant, stock: newStock };
+//     }
+//     return variant;
+//   });
+//   await updateDoc(productRef, { variants: updatedVariants });
+
+//   console.log("variant stock updated");
+// };
+//BEFORE REFACTOR//
 
 // to implement search feature in future
 export const searchProducts = async (searchTerm: string) => {
